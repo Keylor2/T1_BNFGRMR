@@ -3,7 +3,7 @@ de código y sentencias de código.
 
 ✓ Manejar los tipos de variables enteras, flotantes, "booleanas, caracteres, cadenas de caracteres (string), arreglo estático, y valor nulo." - Jurguenn
 
-X "Los arreglos se permiten de tipo entero o char realizar la creación. Además, se 
+✓/X "Los arreglos se permiten de tipo entero o char realizar la creación. Además, se 
 permite obtener y modificar sus elementos, y ser utilizados en expresiones." - Keilor
 
 ✓ Permitir sentencias para creación de variables, creación y asignación de expresiones
@@ -19,7 +19,7 @@ X "Debe permitir operadores y operandos, respetando precedencia (usual matemáti
 (después del operando). Para enteros y el negativo adicionalmente se puede aplicar 
 a flotantes" - Keilor/Jurguenn
 
-X "Permitir expresiones relacionales (sobre enteros y flotantes) de menor, menor o 
+✓ "Permitir expresiones relacionales (sobre enteros y flotantes) de menor, menor o 
 igual, mayor, mayor o igual, igual y diferente. Los operadores igual y diferente 
 permiten adicionalmente tipo booleano." - Keilor
 

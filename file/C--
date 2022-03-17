@@ -74,6 +74,10 @@ crearAsignVar	→ crearArreg
 crearArreg		→ arreglo "=" "{" num ("," num)* "}"
 crearArreg		→ arreglo "=" "{" caracter ("," caracter)* "}"
 
+"Obtener elementos de arreglo"
+arreglo         → arreglo"["num"]"
+
+
 "Sentencias: Asignar expresion a variable"
 asignExpVar		→ id "=" expr
 
@@ -105,47 +109,20 @@ expr			→ exprLog
 exprBin			→ num [+-/*~^] num
 
 "Expresiones: Expresiones Unarias"
-exprUna			→ "-" num
+exprUna			→ "--" num
+exprUna         → "++" num
 exprUna			→ num "++"
 exprUna			→ num "--"
 
 "Expresiones: Expresiones Relacionales"
-exprRel			→ ...
+exprRel			→ num">"num
+exprRel         → num"<"num
+exprRel         → num">="num
+exprRel         → num"<="num
+exprRel         → num"=="num
+exprRel         → num"!="num
 
 "Expresiones: Expresiones Logicas"
 exprLog			→ booleano "&" booleano
 exprLog			→ booleano "|" booleano
 exprLog			→ "!" booleano
-
-
-
-
-
-
-"Expresiones relacionales - dudo que funcione"
-
-inicioRel       ← var1">"var2 mayorQueTrue
-inicioRel       ← var1">"var2 mayorQueFalse
-inicioRel       ← var1"<"var2 menorQueTrue
-inicioRel       ← var1"<"var2 menorQueFalse
-inicioRel       ← var1">="var2 mayorEQTrue
-inicioRel       ← var1">="var2 mayorEQFalse
-inicioRel       ← var1"<="var2 menorEQTrue
-inicioRel       ← var1"=="var2 equalTrue
-inicioRel       ← var1"=="var2 equalFalse
-inicioRel       ← var1"!="var2 difTrue
-inicioRel       ← var1"!="var2 difFalse
-var1            ← num
-var2            ← num
-mayorQueTrue    ← "true"
-mayorQueFalse   ← "false"
-menorQueFalse   ← "true"
-menorQueFalse   ← "false"
-mayorEQTrue     ← "true"
-mayorEQFalse    ← "false"
-menorEQTrue     ← "true"
-menorEQFalse    ← "false"
-equalTrue       ← "true"
-equalFalse      ← "false"
-difTrue         ← "true"
-difFalse        ← "false"
