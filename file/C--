@@ -1,1 +1,61 @@
+cero			← 0
+digP			← [1-9]
+digD			← [0-9]
+sign			← “-”
+float			← “.”
+letras          ← [a-zA-Z]
 
+"Creación de variables int|float"
+
+num			    ← cero
+num			    ← sign cuerpoInt
+num			    ← sign cuerpoInt float cuerpoInt
+num			    ← cuerpoInt float cuerpoInt
+num			    ← cuerpotInt
+cuerpoInt		← digP	
+cuerpoInt		← digP digS
+digS			← digD 
+digS			← digD digS
+
+"Operaciones unarias ++|--"
+
+inicio          ← var
+
+"Expresiones relacionales - dudo que funcione"
+
+inicioRel       ← var1">"var2 mayorQueTrue
+inicioRel       ← var1">"var2 mayorQueFalse
+inicioRel       ← var1"<"var2 menorQueTrue
+inicioRel       ← var1"<"var2 menorQueFalse
+inicioRel       ← var1">="var2 mayorEQTrue
+inicioRel       ← var1">="var2 mayorEQFalse
+inicioRel       ← var1"<="var2 menorEQTrue
+inicioRel       ← var1"=="var2 equalTrue
+inicioRel       ← var1"=="var2 equalFalse
+inicioRel       ← var1"!="var2 difTrue
+inicioRel       ← var1"!="var2 difFalse
+var1            ← num
+var2            ← num
+mayorQueTrue    ← "true"
+mayorQueFalse   ← "false"
+menorQueFalse   ← "true"
+menorQueFalse   ← "false"
+mayorEQTrue     ← "true"
+mayorEQFalse    ← "false"
+menorEQTrue     ← "true"
+menorEQFalse    ← "false"
+equalTrue       ← "true"
+equalFalse      ← "false"
+difTrue         ← "true"
+difFalse        ← "false"
+
+
+"Creación, creación y asignación de variables int|float"
+
+inicio			← var
+var			    ← bloque
+var			    ← bloque var
+bloque			← crearAsig
+bloque			← crearAsigOp
+crearAsig		← “int”|”float” id ”#”
+crearAsigOp		← “int”|”float” id“=”(id | num) [+-\*/] (id | num) ”#”
