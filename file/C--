@@ -1,25 +1,126 @@
-cero			← 0
-digP			← [1-9]
-digD			← [0-9]
-sign			← “-”
-float			← “.”
-letras          ← [a-zA-Z]
+-----------------------------------
+"Simbolos"
+cero			→ 0
+digP			→ [1-9]
+digD			→ [0-9]
+letra			→ [a-zA-Z]
+sign			→ "-"
+float			→ "."
 
-"Creación de variables int|float"
+-----------------------------------
+"Identificador"
+id				→ letra (letra | digD)*
 
-num			    ← cero
-num			    ← sign cuerpoInt
-num			    ← sign cuerpoInt float cuerpoInt
-num			    ← cuerpoInt float cuerpoInt
-num			    ← cuerpotInt
-cuerpoInt		← digP	
-cuerpoInt		← digP digS
-digS			← digD 
-digS			← digD digS
+-----------------------------------
+"Tipos"
+tipoFun			→ "int"|"float"|"char"
+tipoVar			→ "int"|"float"|"char"|"bool"|"string"|"null"|arreglo
+num				→ entero | flotante
 
-"Operaciones unarias ++|--"
+"Tipos: Entero"
+entero			→ cero
+entero			→ sign? cuerpoEnt
+cuerpoEnt		→ digP digD*
 
-inicio          ← var
+"Tipos: Float"
+flotante	    → sign? cero float digD+
+flotante	    → sign? cuerpoEnt float digD+
+
+"Tipos: Char"
+caracter		→ "'" letra "'"
+
+"Tipos: String"
+string			→ """ (letra | num)* """
+
+"Tipos: Booleano"
+booleano		→ "true" | "false"
+booleano		→ exprRel
+booleano		→ exprLog
+
+"Tipos: Arreglo"
+arreglo			→ "int"|"char" "[" "]"
+arregloObtElem	→ id "[" digD "]"
+arregloModElem	→ arregloObtElem "=" expr
+
+-----------------------------------
+"Comentarios"
+comentario		→ "/" "/" (digD | letra)* "\n"   <- Preguntar sobre fin de linea
+comentario		→ "/" "*" (digD | letra)* "*" "/"
+
+-----------------------------------
+"Estructura del programa"
+programa		→ "main" { bloquePro* }
+bloquePro		→ crearFuncion
+bloquePro		→ sentencia
+bloquePro		→ estrucControl
+bloqueCod		→ "{" bloquePro* "}"	
+
+-----------------------------------
+"Estructura: Sentencias"
+sentencia		→ crearVar "#"
+sentencia		→ crearAsignVar "#"
+sentencia		→ asignExpVar "#"
+sentencia		→ expr "#"
+
+"Sentencias: Crear/Asignar variables"
+crearVar		→ tipoVar id
+crearAsignVar	→ crearVar "=" (expr | "null")
+crearAsignVar	→ "int" id "=" entero
+crearAsignVar	→ "float" id "=" flotante
+crearAsignVar	→ "char" id "=" caracter
+crearAsignVar	→ "bool" id "=" booleano
+crearAsignVar	→ "string" id "=" string
+crearAsignVar	→ crearArreg
+crearArreg		→ arreglo "=" "{" num ("," num)* "}"
+crearArreg		→ arreglo "=" "{" caracter ("," caracter)* "}"
+
+"Sentencias: Asignar expresion a variable"
+asignExpVar		→ id "=" expr
+
+-----------------------------------
+"Estructura: Funciones"
+crearFuncion	→ tipo id "(" ")" "{" bloqueCod "}"
+crearFuncion	→ tipo id "(" crearParametro ("," crearParametro)* ")" "{" bloqueCod "}"
+crearParametro	→ tipo id
+parametro		→ num | caracter | booleano | string |  id
+ejecFuncion		→ id "(" ")"
+ejecFuncion		→ id "(" id ("," id)* ")"
+
+-----------------------------------
+"Estructura: Estructuras de Control"
+estrucControl	→ "if" condicion bloqueCod ("else" bloqueCod)?
+estrucControl	→ "while" condicion bloqueCod
+estrucControl	→ "switch" ...
+condicion		→ exprRel | exprLog
+
+-----------------------------------
+"Expresiones"
+expr			→ entero | flotante | char  <- Preguntar si un literal por si solo es una expresion. 
+expr			→ exprBin
+expr			→ exprUna
+expr			→ exprRel
+expr			→ exprLog
+
+"Expresiones: Expresiones Binarias"
+exprBin			→ num [+-/*~^] num
+
+"Expresiones: Expresiones Unarias"
+exprUna			→ "-" num
+exprUna			→ num "++"
+exprUna			→ num "--"
+
+"Expresiones: Expresiones Relacionales"
+exprRel			→ ...
+
+"Expresiones: Expresiones Logicas"
+exprLog			→ booleano "&" booleano
+exprLog			→ booleano "|" booleano
+exprLog			→ "!" booleano
+
+
+
+
+
 
 "Expresiones relacionales - dudo que funcione"
 
@@ -48,14 +149,3 @@ equalTrue       ← "true"
 equalFalse      ← "false"
 difTrue         ← "true"
 difFalse        ← "false"
-
-
-"Creación, creación y asignación de variables int|float"
-
-inicio			← var
-var			    ← bloque
-var			    ← bloque var
-bloque			← crearAsig
-bloque			← crearAsigOp
-crearAsig		← “int”|”float” id ”#”
-crearAsigOp		← “int”|”float” id“=”(id | num) [+-\*/] (id | num) ”#”

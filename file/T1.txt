@@ -1,8 +1,7 @@
 ✓ Permitir la creación de funciones, y dentro de ellas, estructuras de control, bloques 
 de código y sentencias de código. 
 
-✓/X Manejar los tipos de variables enteras, flotantes, "booleanas, caracteres, cadenas de 
-caracteres (string), arreglo estático, y valor nulo." - Jurguenn
+✓ Manejar los tipos de variables enteras, flotantes, "booleanas, caracteres, cadenas de caracteres (string), arreglo estático, y valor nulo." - Jurguenn
 
 X "Los arreglos se permiten de tipo entero o char realizar la creación. Además, se 
 permite obtener y modificar sus elementos, y ser utilizados en expresiones." - Keilor
@@ -14,24 +13,20 @@ X "Las expresiones permiten combinar literales, variables y/o funciones, de los 
 
 X "Debe permitir operadores y operandos, respetando precedencia (usual matemática) y permitiendo el uso de paréntesis." - Keilor
 
-X "Permitir expresiones aritméticas binarias de suma (+), resta (-)," división (/) –entera o decimal según el tipo--, multiplicación (*), módulo (~) y potencia (^). Para enteros o reales." - Jurguenn
+✓ "Permitir expresiones aritméticas binarias de suma (+), resta (-)," división (/) –entera o decimal según el tipo--, multiplicación (*), módulo (~) y potencia (^). Para enteros o reales." - Jurguenn
 
-X "Permitir expresiones aritméticas unarias de negativo(antes del operando), ++, --
+✓ "Permitir expresiones aritméticas unarias de negativo(antes del operando), ++, --
 (después del operando). Para enteros y el negativo adicionalmente se puede aplicar 
-a flotantes" - Keilor
-
-X "Permitir expresiones aritméticas unarias de negativo(antes del operando), ++, --
-(después del operando). Para enteros y el negativo adicionalmente se puede aplicar 
-a flotantes." Consulta - Jurguenn
+a flotantes" - Keilor/Jurguenn
 
 X "Permitir expresiones relacionales (sobre enteros y flotantes) de menor, menor o 
 igual, mayor, mayor o igual, igual y diferente. Los operadores igual y diferente 
 permiten adicionalmente tipo booleano." - Keilor
 
-X "Permitir expresiones lógicas de conjunción, disyunción y negación (ésta puede ser 
+✓ "Permitir expresiones lógicas de conjunción, disyunción y negación (ésta puede ser 
 tipo función o caracter (! o not))" - Jurguenn
 
-X "Debe permitir sentencias de código para las diferentes expresiones mencionadas 
+✓ "Debe permitir sentencias de código para las diferentes expresiones mencionadas 
 anteriormente y su combinación, el delimitador de final de expresión será el 
 carácter gato (#). Además, dichas expresiones pueden usarse en las condicionales y 
 bloques de las siguientes estructuras de control." - Keilor
@@ -55,7 +50,7 @@ X "Debe permitir la creación y utilización de funciones, estos deben retornar 
 ✓ .Debe definir un único procedimiento inicial main, por medio de la cual se inicia la 
 ejecución de los programas.
 
-X "Además, debe permitir comentarios de una línea (//) o múltiples líneas (/* */)." - Jurguenn
+✓ "Además, debe permitir comentarios de una línea (//) o múltiples líneas (/* */)." - Jurguenn
 
-X "Toda gramática libre de contexto BNF debe tener un símbolo inicial, que a partir de 
+✓ "Toda gramática libre de contexto BNF debe tener un símbolo inicial, que a partir de 
 ella se generan todas las producciones." Consulta
