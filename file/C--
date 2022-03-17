@@ -75,8 +75,11 @@ crearArreg		→ arreglo "=" "{" num ("," num)* "}"
 crearArreg		→ arreglo "=" "{" caracter ("," caracter)* "}"
 
 "Obtener elementos de arreglo"
-arreglo         → arreglo"["num"]"
+arreglo         → arreglo"["num"]" "#"
 
+"Modificar elementos de arreglo"
+arreglo         → arreglo"["num"]" "=" num "#"
+arreglo         → arreglo"["num"]" "=" caracter "#"
 
 "Sentencias: Asignar expresion a variable"
 asignExpVar		→ id "=" expr
