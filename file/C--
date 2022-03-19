@@ -69,7 +69,7 @@ return			→ "return" (literal | expr | id | funcion) "#"
 
 "Estructura: Bloques de codigo en estructuras de control"
 bloqueControl	→ bloqueCod | break
-break			→ "break" #
+break			→ "break" "#"
 
 -----------------------------------
 "Estructura: Funciones"
