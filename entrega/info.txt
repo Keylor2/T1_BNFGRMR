@@ -1,0 +1,8 @@
+a. Nombre del curso: Compiladores e Intérpretes.
+b. Número de semestre y año lectivo: I - 2022
+c. Nombre de los Estudiantes: Keilor Martinez - Jurguenn Morales
+d. Número de carnet de los estudiantes: 2018319336 - 
+e. Número de tarea: #1
+f. Fecha de entrega: 17/03/2022
+g. Estatus de la entrega (debe ser CONGRUENTE con la solución entregada): 
+[Deplorable|Regular|Buena|MuyBuena|Excelente|Superior
