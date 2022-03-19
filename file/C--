@@ -51,10 +51,11 @@ comentario		→ "/" "*" (digD | letra)* "*" "/"
 inicio			→ programa
 programa		→ "int" "main" "(" ")" "{" bloqueCod "}"
 programa		→ crearFuncion programa
+programa		→ comentario programa
 
 "Estructura: Bloques de codigo"
-bloqueCod		→ sentencia | estrucControl | return
-bloqueCod		→ (sentencia | estrucControl) bloqueCod
+bloqueCod		→ sentencia | estrucControl | return | comentario
+bloqueCod		→ (sentencia | estrucControl | comentario) bloqueCod
 return			→ "return" (literal | expr | id | funcion) "#"
 
 "Estructura: Bloques de codigo en estructuras de control"
