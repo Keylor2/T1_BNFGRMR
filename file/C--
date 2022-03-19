@@ -9,7 +9,10 @@ float			→ "."
 
 -----------------------------------
 "Identificador"
-id				→ letra (letra | digD)*
+id				→ letra
+id				→ letra hilera
+hilera			→ letra | digD
+hilera			→ (letra | digD) hilera
 
 -----------------------------------
 "Tipos"
@@ -19,19 +22,24 @@ num				→ entero | flotante
 literal			→ num | caracter | string | booleano | elemArreglo
 
 "Tipos: Entero"
-entero			→ cero
-entero			→ sign? cuerpoEnt
-cuerpoEnt		→ digP digD*
+entero			→ cero | enteroPos | enteroNeg
+enteroPos		→ digP
+enteroPos		→ digP cuerpoEnt
+enteroNeg		→ sign enteroPos
+cuerpoEnt		→ digD
+cuerpoEnt		→ digD cuerpoEnt
 
 "Tipos: Float"
-flotante	    → sign? cero float digD+
-flotante	    → sign? cuerpoEnt float digD+
+flotante	    → flotanteCero | flotantePos | flotanteNeg
+flotanteCero	→ cero float cuerpoEnt
+flotantePos	    → enteroPos float cuerpoEnt
+flotanteNeg		→ sign (flotanteCero | flotantePos)
 
 "Tipos: Char"
 caracter		→ "'" letra "'"
 
 "Tipos: String"
-string			→ """ (letra | num)* """
+string			→ """ hilera """
 
 "Tipos: Booleano"
 booleano		→ "true"|"false"
@@ -43,8 +51,9 @@ elemArreglo		→ id "[" (digD|id|funcion) "]"
 
 -----------------------------------
 "Comentarios"
-comentario		→ "/" "/" (digD | letra)* "\n"
-comentario		→ "/" "*" (digD | letra)* "*" "/"
+comentario		→ "/" "/" hilera "\n"
+comentario		→ "/" "*" hilera "*" "/"
+comentario		→ "/" "*" hilera "*" "/"
 
 -----------------------------------
 "Estructura del programa"
@@ -65,12 +74,14 @@ break			→ "break" #
 -----------------------------------
 "Estructura: Funciones"
 crearFuncion	→ tipoFun id "(" ")" "{" bloqueCod "}"
-crearFuncion	→ tipoFun id "(" parametro ")" "{" bloqueCod "}"
-parametro		→ tipoVar id
-parametro		→ tipoVar id "," parametro
+crearFuncion	→ tipoFun id "(" crearParametro ")" "{" bloqueCod "}"
+crearParametro	→ tipoVar id
+crearParametro	→ tipoVar id "," crearParametro
 funcion			→ id "(" ")"
-funcion			→ id "(" id ("," id)* ")"
+funcion			→ id "(" parametro ")"
 funcion			→ "sysRead" "(" ")"
+parametro		→ literal | expr | id | funcion
+parametro		→ (literal | expr | id | funcion) "," parametro
 
 -----------------------------------
 "Estructura: Sentencias"
