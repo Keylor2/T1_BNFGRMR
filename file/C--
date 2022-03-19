@@ -118,7 +118,7 @@ operando		→ literal | id | funcion | "null"
 operando		→ "(" expr ")"
 
 "Expresiones: Expresiones Binarias"
-exprBin			→ operando operadorArit operando
+exprBin			→ operando operadorBin operando
 operadorBin		→ "+"|"-"|"/"|"*"|"~"|"^"
 
 "Expresiones: Expresiones Unarias"
