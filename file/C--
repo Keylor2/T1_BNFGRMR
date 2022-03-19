@@ -114,7 +114,7 @@ condicion		→ booleano | exprRel | exprLog
 -----------------------------------
 "Expresiones"
 expr			→ exprBin | exprUna | exprRel | exprLog
-operando		→ literal | id | funcion
+operando		→ literal | id | funcion | "null"
 operando		→ "(" expr ")"
 
 "Expresiones: Expresiones Binarias"
