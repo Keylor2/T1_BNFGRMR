@@ -1,0 +1,151 @@
+-----------------------------------
+"Simbolos"
+cero			→ 0
+digP			→ [1-9]
+digD			→ [0-9]
+letra			→ [a-zA-Z]
+sign			→ "-"
+float			→ "."
+
+-----------------------------------
+"Identificador"
+id				→ letra
+id				→ letra hilera
+hilera			→ letra | digD
+hilera			→ (letra | digD) hilera
+
+-----------------------------------
+"Tipos"
+tipoFun			→ "int"|"float"|"char"
+tipoVar			→ "int"|"float"|"char"|"bool"|"string"|arreglo
+num				→ entero | flotante
+literal			→ num | caracter | string | booleano | elemArreglo
+
+"Tipos: Entero"
+entero			→ cero | enteroPos | enteroNeg
+enteroPos		→ digP
+enteroPos		→ digP cuerpoEnt
+enteroNeg		→ sign enteroPos
+cuerpoEnt		→ digD
+cuerpoEnt		→ digD cuerpoEnt
+
+"Tipos: Float"
+flotante	    → flotanteCero | flotantePos | flotanteNeg
+flotanteCero	→ cero float cuerpoEnt
+flotantePos	    → enteroPos float cuerpoEnt
+flotanteNeg		→ sign (flotanteCero | flotantePos)
+
+"Tipos: Char"
+caracter		→ "'" letra "'"
+
+"Tipos: String"
+string			→ """ hilera """
+
+"Tipos: Booleano"
+booleano		→ "true"|"false"
+
+"Tipos: Arreglo"
+arreglo			→ tipoArreglo "[" "]"
+tipoArreglo		→ "int"|"char"
+elemArreglo		→ id "[" (digD|id|funcion) "]"
+
+-----------------------------------
+"Comentarios"
+comentario		→ "/" "/" hilera "\n"
+comentario		→ "/" "*" hilera "*" "/"
+comentario		→ "/" "*" hilera "*" "/"
+
+-----------------------------------
+"Estructura del programa"
+inicio			→ programa
+programa		→ "int" "main" "(" ")" "{" bloqueCod "}"
+programa		→ crearFuncion programa
+programa		→ comentario programa
+
+"Estructura: Bloques de codigo"
+bloqueCod		→ sentencia | estrucControl | return | comentario
+bloqueCod		→ (sentencia | estrucControl | comentario) bloqueCod
+return			→ "return" (literal | expr | id | funcion) "#"
+
+"Estructura: Bloques de codigo en estructuras de control"
+bloqueControl	→ bloqueCod | break
+break			→ "break" "#"
+
+-----------------------------------
+"Estructura: Funciones"
+crearFuncion	→ tipoFun id "(" ")" "{" bloqueCod "}"
+crearFuncion	→ tipoFun id "(" crearParametro ")" "{" bloqueCod "}"
+crearParametro	→ tipoVar id
+crearParametro	→ tipoVar id "," crearParametro
+funcion			→ id "(" ")"
+funcion			→ id "(" parametro ")"
+funcion			→ "sysRead" "(" ")"
+parametro		→ literal | expr | id | funcion
+parametro		→ (literal | expr | id | funcion) "," parametro
+
+-----------------------------------
+"Estructura: Sentencias"
+sentencia		→ crearVar "#"
+sentencia		→ crearAsignVar "#"
+sentencia		→ asignVar "#"
+sentencia		→ asignElemArreg "#"
+sentencia		→ expr "#"
+sentencia		→ salidaEst "#"
+
+"Sentencias: Crear variables"
+crearVar		→ tipoVar id
+
+"Sentencias: Crear y asignar variables"
+crearAsignVar	→ crearVar "=" (literal | expr | id | funcion | "null")
+crearAsignVar	→ crearVar "=" tipoArreglo "[" entero | expr | id "]"
+crearAsignVar	→ crearVar "=" "{" crearElemArreg "}"
+crearElemArreg	→ (num | caracter)
+crearElemArreg	→ (num | caracter) "," crearElemArreg
+
+"Sentencias: Asignar variable"
+asignVar		→ id "=" (literal | expr | id | funcion | "null")
+
+"Sentencias: Asignar elemento de arreglo"
+asignElemArreg	→ elemArreglo "=" (entero | caracter | expr | id | funcion)
+
+"Sentencias: Escribir en salida estandar"
+salidaEst		→ "sysPrint" "(" (literal | id) ")"
+
+-----------------------------------
+"Estructura: Estructuras de Control"
+estrucControl	→ if | while | switch
+if				→ "if" "(" condicion ")" "{" bloqueControl "}"
+if				→ "if" "(" condicion ")" "{" bloqueControl "}" "else" "{" bloqueControl "}"
+while			→ "while" "(" condicion ")" "{" bloqueControl "}"
+switch			→ "switch" "(" (expr | id | funcion) ")" "{" caso casoDefault"}"
+caso			→ "case" ":" literal "{" bloqueControl "}"
+caso			→ "case" ":" literal "{" bloqueControl "}" caso
+casoDefault		→ "default" "{" bloqueControl "}" 
+condicion		→ booleano | exprRel | exprLog
+
+-----------------------------------
+"Expresiones"
+expr			→ exprBin | exprUna | exprRel | exprLog
+operando		→ literal | id | funcion
+operando		→ "(" expr ")"
+operandoIgual	→ operando | "null"
+
+"Expresiones: Expresiones Binarias"
+exprBin			→ operando operadorBin operando
+operadorBin		→ "+"|"-"|"/"|"*"|"~"|"^"
+
+"Expresiones: Expresiones Unarias"
+exprUna			→ operando operadorUna
+exprUna			→ "-" operando
+operadorUna		→ "--"|"++"
+
+"Expresiones: Expresiones Relacionales"
+exprRel			→ operando operadorRel operando
+exprRel			→ operandoIgual operadorIgual operandoIgual
+operadorRel		→ ">"|"<"|">="|"<="
+operadorIgual	→ "=="|"!="
+
+"Expresiones: Expresiones Logicas"
+exprLog			→ operando operadorLog operando
+exprLog			→ "!" operando
+operadorLog		→ "&"|"|"
