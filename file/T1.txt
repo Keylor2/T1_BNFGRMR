@@ -9,9 +9,9 @@ permite obtener y modificar sus elementos, y ser utilizados en expresiones." - K
 ✓ Permitir sentencias para creación de variables, creación y asignación de expresiones
 y asignación de expresiones a variables, y algunos casos, sólo expresiones sin asignación.
 
-X "Las expresiones permiten combinar literales, variables y/o funciones, de los tipos reconocidos en la gramática." - Jurguenn
+✓ "Las expresiones permiten combinar literales, variables y/o funciones, de los tipos reconocidos en la gramática." - Jurguenn
 
-X "Debe permitir operadores y operandos, respetando precedencia (usual matemática) y permitiendo el uso de paréntesis." - Keilor
+✓ "Debe permitir operadores y operandos, respetando precedencia (usual matemática) y permitiendo el uso de paréntesis." - Keilor
 
 ✓ "Permitir expresiones aritméticas binarias de suma (+), resta (-)," división (/) –entera o decimal según el tipo--, multiplicación (*), módulo (~) y potencia (^). Para enteros o reales." - Jurguenn
 
@@ -31,20 +31,20 @@ anteriormente y su combinación, el delimitador de final de expresión será el
 carácter gato (#). Además, dichas expresiones pueden usarse en las condicionales y 
 bloques de las siguientes estructuras de control." - Keilor
 
-X " Debe permitir el uso de tipos y la combinación de expresiones aritméticas (binarias 
+✓ " Debe permitir el uso de tipos y la combinación de expresiones aritméticas (binarias 
 y unarias), relacionales y lógicas, según las reglas gramaticales, aritméticas, 
 relacionales y lógicas del Paradigma Imperativo, por ejemplo, tomando como 
 referencia el lenguaje C." - Jurguenn
 
-X "Debe permitir las estructuras de control if [-else], while, switch, permitir return y 
+✓ "Debe permitir las estructuras de control if [-else], while, switch, permitir return y 
 break. Las condicionales deberán retornar valores booleanos combinando
 expresiones aritméticas, lógicas y relacionales." - Keilor
 
-X "Debe permitir las funciones de leer (enteros y flotantes) y escribir en la salida 
+✓ "Debe permitir las funciones de leer (enteros y flotantes) y escribir en la salida 
 estándar (cadena carácter, enteros y flotantes), se pueden escribir literales o 
 variables." - Jurguenn
 
-X "Debe permitir la creación y utilización de funciones, estos deben retornar valores
+✓ "Debe permitir la creación y utilización de funciones, estos deben retornar valores
 (entero, reales, char) y recibir parámetros (con tipo)." - Keilor
 
 ✓ .Debe definir un único procedimiento inicial main, por medio de la cual se inicia la 

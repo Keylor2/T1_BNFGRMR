@@ -14,8 +14,9 @@ id				→ letra (letra | digD)*
 -----------------------------------
 "Tipos"
 tipoFun			→ "int"|"float"|"char"
-tipoVar			→ "int"|"float"|"char"|"bool"|"string"|"null"|arreglo
+tipoVar			→ "int"|"float"|"char"|"bool"|"string"|arreglo
 num				→ entero | flotante
+literal			→ num | caracter | string | booleano | elemArreglo
 
 "Tipos: Entero"
 entero			→ cero
@@ -33,99 +34,103 @@ caracter		→ "'" letra "'"
 string			→ """ (letra | num)* """
 
 "Tipos: Booleano"
-booleano		→ "true" | "false"
-booleano		→ exprRel
-booleano		→ exprLog
+booleano		→ "true"|"false"
 
 "Tipos: Arreglo"
-arreglo			→ "int"|"char" "[" "]"
-arregloObtElem	→ id "[" digD "]"
-arregloModElem	→ arregloObtElem "=" expr
+arreglo			→ tipoArreglo "[" "]"
+tipoArreglo		→ "int"|"char"
+elemArreglo		→ id "[" (digD|id|funcion) "]"
 
 -----------------------------------
 "Comentarios"
-comentario		→ "/" "/" (digD | letra)* "\n"   <- Preguntar sobre fin de linea
+comentario		→ "/" "/" (digD | letra)* "\n"
 comentario		→ "/" "*" (digD | letra)* "*" "/"
 
 -----------------------------------
 "Estructura del programa"
-programa		→ "main" { bloquePro* }
-bloquePro		→ crearFuncion
-bloquePro		→ sentencia
-bloquePro		→ estrucControl
-bloqueCod		→ "{" bloquePro* "}"	
+inicio			→ programa
+programa		→ "int" "main" "(" ")" "{" bloqueCod "}"
+programa		→ crearFuncion programa
+
+"Estructura: Bloques de codigo"
+bloqueCod		→ sentencia | estrucControl | return
+bloqueCod		→ (sentencia | estrucControl) bloqueCod
+return			→ "return" (literal | expr | id | funcion) "#"
+
+"Estructura: Bloques de codigo en estructuras de control"
+bloqueControl	→ bloqueCod | break
+break			→ "break" #
+
+-----------------------------------
+"Estructura: Funciones"
+crearFuncion	→ tipoFun id "(" ")" "{" bloqueCod "}"
+crearFuncion	→ tipoFun id "(" parametro ")" "{" bloqueCod "}"
+parametro		→ tipoVar id
+parametro		→ tipoVar id "," parametro
+funcion			→ id "(" ")"
+funcion			→ id "(" id ("," id)* ")"
+funcion			→ "sysRead" "(" ")"
 
 -----------------------------------
 "Estructura: Sentencias"
 sentencia		→ crearVar "#"
 sentencia		→ crearAsignVar "#"
-sentencia		→ asignExpVar "#"
+sentencia		→ asignVar "#"
+sentencia		→ asignElemArreg "#"
 sentencia		→ expr "#"
+sentencia		→ salidaEst "#"
 
-"Sentencias: Crear/Asignar variables"
+"Sentencias: Crear variables"
 crearVar		→ tipoVar id
-crearAsignVar	→ crearVar "=" (expr | "null")
-crearAsignVar	→ "int" id "=" entero
-crearAsignVar	→ "float" id "=" flotante
-crearAsignVar	→ "char" id "=" caracter
-crearAsignVar	→ "bool" id "=" booleano
-crearAsignVar	→ "string" id "=" string
-crearAsignVar	→ crearArreg
-crearArreg		→ arreglo "=" "{" num ("," num)* "}"
-crearArreg		→ arreglo "=" "{" caracter ("," caracter)* "}"
 
-"Obtener elementos de arreglo"
-arreglo         → arreglo"["num"]" "#"
+"Sentencias: Crear y asignar variables"
+crearAsignVar	→ crearVar "=" (literal | expr | id | funcion | "null")
+crearAsignVar	→ crearVar "=" tipoArreglo "[" entero | expr | id "]"
+crearAsignVar	→ crearVar "=" "{" crearElemArreg "}"
+crearElemArreg	→ (num | caracter)
+crearElemArreg	→ (num | caracter) "," crearElemArreg
 
-"Modificar elementos de arreglo"
-arreglo         → arreglo"["num"]" "=" num "#"
-arreglo         → arreglo"["num"]" "=" caracter "#"
+"Sentencias: Asignar variable"
+asignVar		→ id "=" (literal | expr | id | funcion | "null")
 
-"Sentencias: Asignar expresion a variable"
-asignExpVar		→ id "=" expr
+"Sentencias: Asignar elemento de arreglo"
+asignElemArreg	→ elemArreglo "=" (entero | caracter | expr | id | funcion)
 
------------------------------------
-"Estructura: Funciones"
-crearFuncion	→ tipo id "(" ")" "{" bloqueCod "}"
-crearFuncion	→ tipo id "(" crearParametro ("," crearParametro)* ")" "{" bloqueCod "}"
-crearParametro	→ tipo id
-parametro		→ num | caracter | booleano | string |  id
-ejecFuncion		→ id "(" ")"
-ejecFuncion		→ id "(" id ("," id)* ")"
+"Sentencias: Escribir en salida estandar"
+salidaEst		→ "sysPrint" "(" (literal | id) ")"
 
 -----------------------------------
 "Estructura: Estructuras de Control"
-estrucControl	→ "if" condicion bloqueCod ("else" bloqueCod)?
-estrucControl	→ "while" condicion bloqueCod
-estrucControl	→ "switch" ...
-condicion		→ exprRel | exprLog
+estrucControl	→ if | while | switch
+if				→ "if" "(" condicion ")" "{" bloqueControl "}"
+if				→ "if" "(" condicion ")" "{" bloqueControl "}" "else" "{" bloqueControl "}"
+while			→ "while" "(" condicion ")" "{" bloqueControl "}"
+switch			→ "switch" "(" (expr | id | funcion) ")" "{" caso casoDefault"}"
+caso			→ "case" ":" literal "{" bloqueControl "}"
+caso			→ "case" ":" literal "{" bloqueControl "}" caso
+casoDefault		→ "default" "{" bloqueControl "}" 
+condicion		→ booleano | exprRel | exprLog
 
 -----------------------------------
 "Expresiones"
-expr			→ entero | flotante | char  <- Preguntar si un literal por si solo es una expresion. 
-expr			→ exprBin
-expr			→ exprUna
-expr			→ exprRel
-expr			→ exprLog
+expr			→ exprBin | exprUna | exprRel | exprLog
+operando		→ literal | id | funcion
+operando		→ "(" expr ")"
 
 "Expresiones: Expresiones Binarias"
-exprBin			→ num [+-/*~^] num
+exprBin			→ operando operadorArit operando
+operadorBin		→ "+"|"-"|"/"|"*"|"~"|"^"
 
 "Expresiones: Expresiones Unarias"
-exprUna			→ "--" num
-exprUna         → "++" num
-exprUna			→ num "++"
-exprUna			→ num "--"
+exprUna			→ operadorUna operando
+exprUna			→ operando operadorUna
+operadorUna		→ "--"|"++"
 
 "Expresiones: Expresiones Relacionales"
-exprRel			→ num">"num
-exprRel         → num"<"num
-exprRel         → num">="num
-exprRel         → num"<="num
-exprRel         → num"=="num
-exprRel         → num"!="num
+exprRel			→ operando operadorRel operando
+operadorRel		→ ">"|"<"|">="|"<="|"=="|"!="
 
 "Expresiones: Expresiones Logicas"
-exprLog			→ booleano "&" booleano
-exprLog			→ booleano "|" booleano
-exprLog			→ "!" booleano
+exprLog			→ operando operadorLog operando
+exprLog			→ operadorLog operando
+operadorLog		→ "&"|"|"|"!"
