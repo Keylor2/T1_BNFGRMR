@@ -114,23 +114,26 @@ condicion		→ booleano | exprRel | exprLog
 -----------------------------------
 "Expresiones"
 expr			→ exprBin | exprUna | exprRel | exprLog
-operando		→ literal | id | funcion | "null"
+operando		→ literal | id | funcion
 operando		→ "(" expr ")"
+operandoIgual	→ operando | "null"
 
 "Expresiones: Expresiones Binarias"
 exprBin			→ operando operadorBin operando
 operadorBin		→ "+"|"-"|"/"|"*"|"~"|"^"
 
 "Expresiones: Expresiones Unarias"
-exprUna			→ operadorUna operando
 exprUna			→ operando operadorUna
+exprUna			→ "-" operando
 operadorUna		→ "--"|"++"
 
 "Expresiones: Expresiones Relacionales"
 exprRel			→ operando operadorRel operando
-operadorRel		→ ">"|"<"|">="|"<="|"=="|"!="
+exprRel			→ operandoIgual operadorIgual operandoIgual
+operadorRel		→ ">"|"<"|">="|"<="
+operadorIgual	→ "=="|"!="
 
 "Expresiones: Expresiones Logicas"
 exprLog			→ operando operadorLog operando
-exprLog			→ operadorLog operando
-operadorLog		→ "&"|"|"|"!"
+exprLog			→ "!" operando
+operadorLog		→ "&"|"|"
