@@ -4,15 +4,14 @@ cero			→ 0
 digP			→ [1-9]
 digD			→ [0-9]
 letra			→ [a-zA-Z]
-sign			→ "-"
-float			→ "."
+simbolo			→ [|°¬!#$%&/()='?¿¡´¨+*~{[^}]`,;.:-_<>]
 
 -----------------------------------
 "Identificador"
 id				→ letra
-id				→ letra hilera
-hilera			→ letra | digD
-hilera			→ (letra | digD) hilera
+id				→ letra idCuerpo
+idCuerpo		→ letra | digD | "$" | "_"
+idCuerpo		→ (letra | digD | "$" | "_") idCuerpo
 
 -----------------------------------
 "Tipos"
@@ -25,21 +24,23 @@ literal			→ num | caracter | string | booleano | elemArreglo
 entero			→ cero | enteroPos | enteroNeg
 enteroPos		→ digP
 enteroPos		→ digP cuerpoEnt
-enteroNeg		→ sign enteroPos
+enteroNeg		→ "-" enteroPos
 cuerpoEnt		→ digD
 cuerpoEnt		→ digD cuerpoEnt
 
 "Tipos: Float"
 flotante	    → flotanteCero | flotantePos | flotanteNeg
-flotanteCero	→ cero float cuerpoEnt
-flotantePos	    → enteroPos float cuerpoEnt
-flotanteNeg		→ sign (flotanteCero | flotantePos)
+flotanteCero	→ cero "." cuerpoEnt
+flotantePos	    → enteroPos "." cuerpoEnt
+flotanteNeg		→ "-" (flotanteCero | flotantePos)
 
 "Tipos: Char"
 caracter		→ "'" letra "'"
 
 "Tipos: String"
 string			→ """ hilera """
+hilera			→ letra | digD | simbolo
+hilera			→ (letra | digD | simbolo) hilera
 
 "Tipos: Booleano"
 booleano		→ "true"|"false"
