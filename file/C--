@@ -127,7 +127,7 @@ condicion		→ booleano | exprRel | exprLog
 -----------------------------------
 "Expresiones"
 expr			→ exprBin | exprUna | exprRel | exprLog
-operando		→ literal | id | funcion
+operando		→ literal | id | funcion | expr
 operando		→ "(" expr ")"
 operandoIgual	→ operando | "null"
 
